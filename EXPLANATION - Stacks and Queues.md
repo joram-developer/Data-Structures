@@ -1006,7 +1006,50 @@ int dequeue() {
 ```
 
 Java version: same structure minus `malloc/free/temp`.
+class Node {
+    int data;
+    Node next;
 
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class Queue {
+    Node front = null;
+    Node rear = null;
+
+    void enqueue(int x) {
+        Node newNode = new Node(x);
+
+        if (rear == null) {          // queue was empty
+            front = newNode;
+            rear = newNode;
+        } else {
+            rear.next = newNode;     // link after old last
+            rear = newNode;           // rear advances
+        }
+    }
+
+    int dequeue() {
+        if (front == null) {         // queue is empty
+            System.out.println("Underflow");
+            return -1;
+        }
+
+        Node temp = front;            // save the front node
+        int x = temp.data;             // get its data
+
+        front = front.next;            // move front forward
+
+        if (front == null) {
+            rear = null;               // queue became empty
+        }
+
+        return x;
+    }
+}
 ---
 ---
 
