@@ -1,7 +1,7 @@
 public class ArrayInsertion {
     public static void main(String[] args) {
 
-        int[] A = {10, 20, 30, 40};
+        int[] A = {10, 20, 30, 40}; 
         int capacity = A.length;
         int size = 4;
 

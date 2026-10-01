@@ -102,6 +102,7 @@ struct Node *insertAtBeginning(struct Node *head, int data) {
     }
 
 
+5
     /*
         CASE 1: The list is empty.
 
