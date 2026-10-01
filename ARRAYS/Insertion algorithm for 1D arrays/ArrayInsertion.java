@@ -17,6 +17,7 @@ public class ArrayInsertion {
 
         // Shift elements to the right
         for (int i = size; i > location; i--) {
+            A[i+1] = A[i];
             A[i] = A[i - 1];
         }
 
