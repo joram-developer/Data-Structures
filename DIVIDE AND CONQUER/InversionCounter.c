@@ -12,16 +12,16 @@ void printArray(int arr[], int n) {
             printf(", ");
         }
     }
-    
+
     printf("]\n");
 }
 
 int mergeAndCount(int arr[], int left, int mid, int right) {
-    int leftSize = mid - left + 1;
-    int rightSize = right - mid;
+    int leftSize = mid - left + 1;//leftsize stores how many elements are in the left half
+    int rightSize = right - mid;//rightsize stores how many elements are in the right half
 
-    int *leftArray = (int *)malloc(leftSize * sizeof(int));
-    int *rightArray = (int *)malloc(rightSize * sizeof(int));
+    int *leftArray = (int *)malloc(leftSize * sizeof(int));//dynamically allocate memory for the left half of the array
+    int *rightArray = (int *)malloc(rightSize * sizeof(int));//dynamically allocate memory for the right half of the array
 
     for (int i = 0; i < leftSize; i++) {
         leftArray[i] = arr[left + i];
@@ -31,9 +31,9 @@ int mergeAndCount(int arr[], int left, int mid, int right) {
         rightArray[j] = arr[mid + 1 + j];
     }
 
-    int i = 0, j = 0, k = left;
-    int crossInversions = 0;
-
+    int i = 0, j = 0, k = left; // i=0 points to the first element of the leftarray, j=0 points to the first element of the right array
+    int crossInversions = 0;    // k=left identifies where we should write the next sorted element in the original array
+    //the sorting happens
     while (i < leftSize && j < rightSize) {
         if (leftArray[i] <= rightArray[j]) {
             arr[k++] = leftArray[i++];
