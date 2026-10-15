@@ -1,11 +1,12 @@
 
 import java.util.Arrays;
 
-public class InversionCounter{
+public class InversionCounter {
     /*
     The Problem: Counting Inversions in an Array
-    An inversion is a pair of elements in an array that are out of their natural sorted order.
-    Formally, given an array arr, two elements arr[i] and arr[j] form an inversion if:i < j (the element appears earlier in the array)arr[i] > arr[j] (but its value is greater than the later element)
+    An inversion is a pair of elements in an array that are out of sorted order.
+    Formally, arr[i] and arr[j] form an inversion if:
+        i < j and arr[i] > arr[j]
     */
 
     public static void main(String[] args) {
@@ -13,59 +14,62 @@ public class InversionCounter{
 
         System.out.println("Input Array: " + Arrays.toString(arr));
 
-        // We clone the array to preserve the original, as merge sort modifies it
+        // Clone the array so the original stays unchanged
         int inversionCount = countInversions(arr.clone(), 0, arr.length - 1);
 
         System.out.println("Number of inversions: " + inversionCount);
     }
 
-    // Divide and Conquer wrapper
+    // Divide and Conquer: split the problem into smaller pieces
     public static int countInversions(int[] arr, int left, int right) {
-        int count = 0;
-        if (left < right) {
-            int mid = left + (right - left) / 2;
-
-            // 1. Count inversions in the left half
-            count += countInversions(arr, left, mid);
-
-            // 2. Count inversions in the right half
-            count += countInversions(arr, mid + 1, right);
-
-            // 3. Count "split" inversions during the merge step
-            count += mergeAndCount(arr, left, mid, right);
+        if (left >= right) {
+            return 0;
         }
-        return count;
+
+        int mid = left + (right - left) / 2;
+
+        // 1. Count inversions in the left half
+        int leftInversions = countInversions(arr, left, mid);
+
+        // 2. Count inversions in the right half
+        int rightInversions = countInversions(arr, mid + 1, right);
+
+        // 3. Count inversions that cross the two halves while merging
+        int crossInversions = mergeAndCount(arr, left, mid, right);
+
+        return leftInversions + rightInversions + crossInversions;
     }
 
-    // Combine and Count step
+    // Merge step: combine two sorted halves and count cross inversions
     private static int mergeAndCount(int[] arr, int left, int mid, int right) {
-        // Create copies of the left and right subarrays
         int[] leftArray = Arrays.copyOfRange(arr, left, mid + 1);
         int[] rightArray = Arrays.copyOfRange(arr, mid + 1, right + 1);
 
-        int i = 0, j = 0, k = left;
-        int swaps = 0;
+        int i = 0; // index in leftArray
+        int j = 0; // index in rightArray
+        int k = left; // index in original array
+        int crossCount = 0;
 
         while (i < leftArray.length && j < rightArray.length) {
             if (leftArray[i] <= rightArray[j]) {
                 arr[k++] = leftArray[i++];
             } else {
+                // leftArray[i] > rightArray[j]
+                // so rightArray[j] forms an inversion with every remaining element
+                // in leftArray from i to the end.
                 arr[k++] = rightArray[j++];
-
-                // CRITICAL LOGIC: If leftArray[i] > rightArray[j], then
-                // rightArray[j] is smaller than ALL remaining elements in leftArray.
-                swaps += (leftArray.length - i);
+                crossCount += (leftArray.length - i);
             }
         }
 
-        // Copy remaining elements
         while (i < leftArray.length) {
             arr[k++] = leftArray[i++];
         }
+
         while (j < rightArray.length) {
             arr[k++] = rightArray[j++];
         }
 
-        return swaps;
+        return crossCount;
     }
 }
