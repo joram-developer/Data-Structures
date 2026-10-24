@@ -73,3 +73,27 @@ public class BackwardApproach {
         System.out.println();
     }
 }
+
+
+
+class Bank{
+    void withdraw (int balance, int amount) throws Exception{
+        if(amount>balance){
+            throw new Exception("Insufficient Balance");
+        }
+        else{
+            System.out.println("Amount withdrawn: "+amount);
+        }
+
+    }
+
+    public static void main(String[] args) {
+        Bank b = new Bank();
+        try{
+            b.withdraw(1000, 2000);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+}

@@ -37,7 +37,7 @@ Algorithm DFS(root, target)
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node {
+struct Node {// desribes what every node in the binary tree should have
     char data;
     struct Node *left;
     struct Node *right;
@@ -54,6 +54,7 @@ struct Node* createNode(char value) {
     node->right = NULL;
 
     return node;
+    // therefore, calling say, createNode(A) will return a pointer to a node with data 'A' and left and right children as NULL
 }
 
 /* Breadth-First Search */
@@ -61,12 +62,12 @@ int BFS(struct Node* root, char target) {
     if (root == NULL)
         return 0;
 
-    struct Node* queue[100];
+    struct Node* queue[100];//This is an array of 100 pointers to nodes
     int front = 0, rear = 0;
 
     queue[rear++] = root;
 
-    while (front < rear) {
+    while (front < rear) {//As long as front is less than rear, there is at least one queued node waiting to be processed.
         struct Node* current = queue[front++];
 
         printf("%c ", current->data);
@@ -102,6 +103,37 @@ int DFS(struct Node* root, char target) {
 
     return 0;
 }
+
+
+/* Depth-First Search using a stack */
+// int DFS(struct Node* root, char target) {
+//     if (root == NULL)
+//         return 0;
+
+//     struct Node* stack[100];
+//     int top = -1;
+
+//     stack[++top] = root;
+
+//     while (top >= 0) {
+//         struct Node* current = stack[top--];
+
+//         printf("%c ", current->data);
+
+//         if (current->data == target)
+//             return 1;
+
+//         /* Push right first, so left is processed first */
+//         if (current->right != NULL)
+//             stack[++top] = current->right;
+
+//         if (current->left != NULL)
+//             stack[++top] = current->left;
+//     }
+
+//     return 0;
+// }
+
 
 int main(void) {
     struct Node* root = createNode('A');

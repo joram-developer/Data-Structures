@@ -42,16 +42,17 @@ int graph[N][N] = {
     {0, 0, 0, 1, 1, 0}   // F
 };
 
-void BFS_shortestPath(int start, int goal) {
+void BFS_shortestPath(int start, int goal) {//start is the index of the vertex where the search begins.
+                                            //goal is the index of the destination vertex we want to reach
     int queue[N];
     int front = 0, rear = 0;
     int visited[N] = {0};
-    int parent[N];
+    int parent[N];//The parent array remembers how we reached each vertex.
 
     for (int i = 0; i < N; i++)
         parent[i] = -1;
 
-    visited[start] = 1;
+    visited[start] = 1;//1 means that vertex was visited. 0 means that vertex was not visited yet.
     queue[rear++] = start;
 
     while (front < rear) {
@@ -98,3 +99,4 @@ int main(void) {
     BFS_shortestPath(0, 5);  // A to F
     return 0;
 }
+
