@@ -1,7 +1,11 @@
 public class ArrayInsertion {
     public static void main(String[] args) {
 
-        int[] A = {10, 20, 30, 40}; 
+        int[] A = new int[5]; // Create an array with a capacity of 5
+        A[0] = 10;
+        A[1] = 20;
+        A[2] = 30;
+        A[3] = 40;
         int capacity = A.length;
         int size = 4;
 

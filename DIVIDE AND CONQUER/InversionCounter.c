@@ -18,7 +18,9 @@ void printArray(int arr[], int n) {
 
 int mergeAndCount(int arr[], int left, int mid, int right) {
     int leftSize = mid - left + 1;//leftsize stores how many elements are in the left half
+                                  //we do mid - left + 1 because mid is inclusive in the left half, so we add 1 to include it in the count
     int rightSize = right - mid;//rightsize stores how many elements are in the right half
+                                //here we don't add 1 because mid is exclusive in the right half, so we don't include it in the count
 
     int *leftArray = (int *)malloc(leftSize * sizeof(int));//dynamically allocate memory for the left half of the array
     int *rightArray = (int *)malloc(rightSize * sizeof(int));//dynamically allocate memory for the right half of the array
@@ -61,7 +63,7 @@ int countInversions(int arr[], int left, int right) {
         return 0;
     }
 
-    int mid = left + (right - left) / 2;
+    int mid = left + (right - left) / 2;//we do left + (right - left) because
 
     int leftInversions = countInversions(arr, left, mid);
     int rightInversions = countInversions(arr, mid + 1, right);
