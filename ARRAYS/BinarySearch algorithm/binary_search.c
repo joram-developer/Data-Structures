@@ -61,6 +61,7 @@ int binarySearchRecursive(int arr[], int left, int right, int target) {
     }
     
     int mid = left + (right - left) / 2;  // Calculate middle index safely
+    //we calculate the middle index using left + (right - left) / 2 instead of (left + right) / 2 to prevent potential overflow when left and right are large integers.
     
     // Check if target is present at mid
     if (arr[mid] == target) {
